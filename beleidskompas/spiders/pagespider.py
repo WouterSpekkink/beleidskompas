@@ -13,11 +13,11 @@ class ConsultationItem(scrapy.Item):
     Organisatie = scrapy.Field()
     Keten_ID = scrapy.Field()
     Onderwerpen = scrapy.Field()
-    Beleidskompas = scrapy.Field() # TODO
-    IAK = scrapy.Field() # TODO
+    Beleidskompas = scrapy.Field() 
+    IAK = scrapy.Field() 
     # MINISTERIES
+    # AANTAL DOCUMENTEN?
     
-
 class PageSpider(scrapy.Spider):
     name = "pagespider"
     base_folder = 'data'  # Main folder to store all data
