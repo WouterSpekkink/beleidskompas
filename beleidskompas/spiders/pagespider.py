@@ -15,7 +15,10 @@ class ConsultationItem(scrapy.Item):
     Onderwerpen = scrapy.Field()
     Beleidskompas = scrapy.Field() 
     IAK = scrapy.Field() 
-    # MINISTERIES
+    minJV = scrapy.Field()
+    minOCW = scrapy.Field()
+    minLNV = scrapy.Field()
+    minIW = scrapy.Field()
     # AANTAL DOCUMENTEN?
     
 class PageSpider(scrapy.Spider):
@@ -48,6 +51,22 @@ class PageSpider(scrapy.Spider):
             else:
                 # General case for other fields
                 value = row.xpath('td//text()').get().strip()
+
+                # Initialize ministries
+                item['minJV'] = False
+                item['minOCW'] = False
+                item['minLNV'] = False
+                item['minIW'] = False
+                
+                if 'Organisatie' in header:
+                    if 'Ministerie van Justitie en Veiligheid' in value:
+                        item['minJV'] = True
+                    if 'Ministerie van Onderwijs, Cultuur en Wetenschap' in value:
+                        item['minOCW'] = True
+                    if 'Ministerie van Landbouw, Natuur en Voedselkwaliteit' in value:
+                        item['minLNV'] = False
+                    if 'Ministerie van Infrastructuur en Waterstaat' in value:
+                        item['minIW'] = False
 
                 # Dynamically assign values to item fields based on the header
                 field_name = header.replace(' ', '_').replace('-', '').replace('.', '')
